@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Quack</title>
+<meta name="application-name" content="Quack">
+<meta name="apple-mobile-web-app-title" content="Quack">
+<meta name="theme-color" content="#14161C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-180.png">
+<script>
+  // הכתובת של Quack ב-Claude
+  var QUACK_URL = "https://claude.ai/artifact/BAyWZwCUYwupA6GycRZj3U";
+  // נפתח מהאייקון במסך הבית: עוברים ישר ל-Quack
+  if (new URLSearchParams(location.search).get("go") === "1") {
+    location.replace(QUACK_URL);
+  }
+</script>
+<style>
+  :root{--bg:#14161C;--card:#1c1f27;--ink:#FAF7F0;--muted:#a9adb8;--cyan:#16B8C4;--line:#2a2e38}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Assistant","Heebo",Arial,sans-serif;line-height:1.5;min-height:100vh;display:flex;justify-content:center}
+  main{width:100%;max-width:440px;padding:32px 16px 40px;text-align:center}
+  img.duck{width:120px;height:120px;border-radius:28px}
+  h1{font-size:30px;margin:14px 0 2px}
+  .tag{color:var(--muted);margin:0 0 28px}
+  .btn{display:block;width:100%;padding:14px;border-radius:12px;background:var(--cyan);color:#0c0e14;font-weight:700;font-size:17px;text-decoration:none;border:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:22px;text-align:right}
+  .card h2{font-size:17px;margin:0 0 10px}
+  ol{margin:0;padding-inline-start:20px}
+  li{margin:6px 0}
+  .warn{color:#f0b35a;margin-top:10px}
+  .hide{display:none}
+  .go{padding-top:30vh;color:var(--muted)}
+  .go a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<main>
+  <div id="going" class="go hide">פותח את Quack…<br><a id="golink" href="#">אם זה לא נפתח, ללחוץ כאן</a></div>
+
+  <div id="page">
+    <img class="duck" src="icon-512.png" alt="">
+    <h1>Quack</h1>
+    <p class="tag">הברווז היומי · מהמייל לסיילספורס, בקוואק.</p>
+
+    <a class="btn" id="open" href="#">פתיחת Quack</a>
+
+    <div class="card hide" id="ios">
+      <h2>שמירה כאייקון באייפון</h2>
+      <ol>
+        <li>לפתוח את הדף הזה ב-Safari.</li>
+        <li>ללחוץ על כפתור השיתוף (ריבוע עם חץ למעלה).</li>
+        <li>לבחור "הוספה למסך הבית" ולאשר.</li>
+      </ol>
+      <p class="warn hide" id="ios-inapp">הדף פתוח בתוך אפליקציה אחרת. צריך לפתוח אותו ב-Safari.</p>
+    </div>
+
+    <div class="card hide" id="android">
+      <h2>שמירה כאייקון באנדרואיד</h2>
+      <ol>
+        <li>לפתוח את הדף הזה ב-Chrome.</li>
+        <li>ללחוץ על תפריט 3 הנקודות.</li>
+        <li>לבחור "הוספה למסך הבית" ולאשר.</li>
+      </ol>
+      <p class="warn hide" id="samsung">בדפדפן של סמסונג השמירה נחסמת. צריך לפתוח את הדף ב-Chrome.</p>
+    </div>
+
+    <div class="card hide" id="desktop">
+      <h2>במחשב</h2>
+      <p style="margin:0">אפשר לפתוח את Quack מהכפתור למעלה, או לנעוץ אותו בסרגל הצד של Claude.</p>
+    </div>
+  </div>
+</main>
+<script>
+  var going = new URLSearchParams(location.search).get("go") === "1";
+  document.getElementById("open").href = QUACK_URL;
+  document.getElementById("golink").href = QUACK_URL;
+  if (going) {
+    document.getElementById("page").classList.add("hide");
+    document.getElementById("going").classList.remove("hide");
+  } else {
+    var ua = navigator.userAgent || "";
+    var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    var isAndroid = /Android/.test(ua);
+    if (isIOS) {
+      document.getElementById("ios").classList.remove("hide");
+      if (/FBAN|FBAV|Instagram|WhatsApp|Line\/|GSA\//.test(ua) || !/Safari/.test(ua)) {
+        document.getElementById("ios-inapp").classList.remove("hide");
+      }
+    } else if (isAndroid) {
+      document.getElementById("android").classList.remove("hide");
+      if (/SamsungBrowser/.test(ua)) document.getElementById("samsung").classList.remove("hide");
+    } else {
+      document.getElementById("desktop").classList.remove("hide");
+    }
+    // הכתובת שתישמר במסך הבית תעביר ישר ל-Quack
+    try { history.replaceState(null, "", location.pathname + "?go=1"); } catch (e) {}
+  }
+</script>
+</body>
+</html>
