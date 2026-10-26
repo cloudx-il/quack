@@ -13,10 +13,6 @@
 <script>
   // הכתובת של Quack ב-Claude
   var QUACK_URL = "https://claude.ai/artifact/BAyWZwCUYwupA6GycRZj3U";
-  // נפתח מהאייקון במסך הבית: עוברים ישר ל-Quack
-  if (new URLSearchParams(location.search).get("go") === "1") {
-    location.replace(QUACK_URL);
-  }
 </script>
 <style>
   :root{--bg:#14161C;--card:#1c1f27;--ink:#FAF7F0;--muted:#a9adb8;--cyan:#16B8C4;--line:#2a2e38}
@@ -61,11 +57,10 @@
     <div class="card hide" id="android">
       <h2>שמירה כאייקון באנדרואיד</h2>
       <ol>
-        <li>לפתוח את הדף הזה ב-Chrome.</li>
-        <li>ללחוץ על תפריט 3 הנקודות.</li>
-        <li>לבחור "הוספה למסך הבית" ולאשר.</li>
+        <li>ללחוץ על התפריט של הדפדפן (ב-Chrome: 3 נקודות. בדפדפן של סמסונג: 3 קווים).</li>
+        <li>לבחור "הוספה למסך הבית" (בסמסונג: "הוסף דף אל" ואז "מסך הבית").</li>
+        <li>לאשר. אייקון הברווז יופיע במסך הבית.</li>
       </ol>
-      <p class="warn hide" id="samsung">בדפדפן של סמסונג השמירה נחסמת. צריך לפתוח את הדף ב-Chrome.</p>
     </div>
 
     <div class="card hide" id="desktop">
@@ -75,7 +70,7 @@
   </div>
 </main>
 <script>
-  var going = new URLSearchParams(location.search).get("go") === "1";
+  var going = false;
   document.getElementById("open").href = QUACK_URL;
   document.getElementById("golink").href = QUACK_URL;
   if (going) {
@@ -92,12 +87,9 @@
       }
     } else if (isAndroid) {
       document.getElementById("android").classList.remove("hide");
-      if (/SamsungBrowser/.test(ua)) document.getElementById("samsung").classList.remove("hide");
     } else {
       document.getElementById("desktop").classList.remove("hide");
     }
-    // הכתובת שתישמר במסך הבית תעביר ישר ל-Quack
-    try { history.replaceState(null, "", location.pathname + "?go=1"); } catch (e) {}
   }
 </script>
 </body>
