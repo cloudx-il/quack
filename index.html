@@ -13,6 +13,10 @@
 <script>
   // הכתובת של Quack ב-Claude
   var QUACK_URL = "https://claude.ai/artifact/BAyWZwCUYwupA6GycRZj3U";
+  // נפתח מהאייקון המותקן (start_url עם go=1): עוברים ישר ל-Quack
+  if (new URLSearchParams(location.search).get("go") === "1") {
+    location.replace(QUACK_URL);
+  }
 </script>
 <style>
   :root{--bg:#14161C;--card:#1c1f27;--ink:#FAF7F0;--muted:#a9adb8;--cyan:#16B8C4;--line:#2a2e38}
@@ -57,9 +61,9 @@
     <div class="card hide" id="android">
       <h2>שמירה כאייקון באנדרואיד</h2>
       <ol>
-        <li>ללחוץ על התפריט של הדפדפן (ב-Chrome: 3 נקודות. בדפדפן של סמסונג: 3 קווים).</li>
-        <li>לבחור "הוספה למסך הבית" (בסמסונג: "הוסף דף אל" ואז "מסך הבית").</li>
-        <li>לאשר. אייקון הברווז יופיע במסך הבית.</li>
+        <li>לפתוח את הדף הזה ב-Chrome.</li>
+        <li>ללחוץ על 3 הנקודות ולבחור "התקנה ויצירת קיצור דרך".</li>
+        <li>לבחור "התקנה". אייקון הברווז יפתח ישר את Quack.</li>
       </ol>
     </div>
 
@@ -70,7 +74,7 @@
   </div>
 </main>
 <script>
-  var going = false;
+  var going = new URLSearchParams(location.search).get("go") === "1";
   document.getElementById("open").href = QUACK_URL;
   document.getElementById("golink").href = QUACK_URL;
   if (going) {
